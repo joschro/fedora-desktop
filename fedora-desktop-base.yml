@@ -1,0 +1,56 @@
+---
+- hosts: localhost
+  gather_facts: yes
+  vars:
+    myhostame: myfedora.local
+  #vars_files:
+  #  - /root/vars.yml
+  become: yes
+  tasks:
+    - name: Install RPMfusion repositories
+      shell: rpm -q rpmfusion-nonfree-release || yum -y install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+      args:
+        creates: /etc/yum.repos.d/rpmfusion-free.repo
+        removes: /etc/centos-release
+
+
+    - name: Install tainted repositories
+      package:
+        name:
+          - rpmfusion-free-release-tainted
+          - rpmfusion-nonfree-release-tainted
+        state: present
+
+    - name: Install packages
+      package:
+        name:
+          - vim
+          - tmux
+          - podman
+          - cockpit
+          - cockpit-composer
+          - cockpit-dashboard
+          - cockpit-machines
+          - cockpit-podman
+          - cockpit-storaged
+          - cockpit-session-recording
+          - libreoffice
+          - ImageMagick
+          - bash-completion
+          - libdvdcss
+          - webcamoid
+          - digikam
+          - qpdfview
+        state: present
+
+    - name: Force systemd to reread config, enable and start service
+      systemd:
+        name: cockpit.socket
+        state: restarted
+        daemon_reload: yes
+        enabled: yes
+
+    - name: Update packages
+      package:
+        name: '*'
+        state: latest
