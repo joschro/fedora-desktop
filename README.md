@@ -15,6 +15,7 @@ Start settings tool and set regional settings like language and timezone.
 
 Enter
 ```
-sudo yum install -y ansible
+sudo dnf install -y ansible vim
+wget https://github.com/joschro/fedora-desktop-base/raw/main/fedora-desktop-base.yml
 ```
 
