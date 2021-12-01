@@ -50,6 +50,12 @@
         daemon_reload: yes
         enabled: yes
     
+    - name: Enable and start service ssh
+      systemd:
+        name: sshd
+        state: started
+        enabled: yes
+    
     - name: Add current IP to motd
       lineinfile:
           path: /etc/issue
