@@ -43,10 +43,19 @@
           - bash-completion
           - libdvdcss
           - digikam
-            #- \*-firmware
+          - "*-firmware"
+          - "@virtualization"
+          - virt-top
         state: present
 
-    - name: Force systemd to reread config, enable and start service
+    - name: Force systemd to reread config, enable and start service libvirtd
+      systemd:
+        name: libvirtd
+        state: restarted
+        daemon_reload: yes
+        enabled: yes
+
+    - name: Force systemd to reread config, enable and start service cockpit.socket
       systemd:
         name: cockpit.socket
         state: restarted
