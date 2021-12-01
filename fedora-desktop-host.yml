@@ -26,9 +26,8 @@
     - name: Install packages
       package:
         name:
-          - vim
-          - tmux
-          - podman
+          - "*-firmware"
+          - "@virtualization"
           - cockpit
           - cockpit-composer
           - cockpit-machines
@@ -38,13 +37,7 @@
           - cockpit-session-recording
           - cockpit-storaged
           - cockpit-system
-          - libreoffice
-          - ImageMagick
-          - bash-completion
-          - libdvdcss
-          - digikam
-          - "*-firmware"
-          - "@virtualization"
+          - podman
           - virt-top
         state: present
 
