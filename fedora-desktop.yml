@@ -45,6 +45,7 @@
           - libreoffice
           - podman
           - podman-docker
+          - rclone
           - tmux
           - usbutils
           - vim
