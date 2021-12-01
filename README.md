@@ -1,1 +1,1 @@
-# fedora-desktop-bas
+# fedora-desktop-base
