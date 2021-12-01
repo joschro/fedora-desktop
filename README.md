@@ -1,4 +1,4 @@
-# fedora-desktop-base
+# fedora-desktop-host
 
 Install from Fedora-KDE-Live-x86_64-35-1.2.iso with:
 
@@ -16,11 +16,11 @@ Start settings tool and set regional settings like language and timezone.
 Enter
 ```
 sudo dnf install -y ansible vim
-wget https://github.com/joschro/fedora-desktop-base/raw/main/fedora-desktop-base.yml
+wget https://github.com/joschro/fedora-desktop-host/raw/main/fedora-desktop-host.yml
 ```
 
 Now run
 ```
-ansible-playbook -K fedora-desktop-base.yml
+ansible-playbook -K fedora-desktop-host.yml
 ```
 providing your local user's password.
