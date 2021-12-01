@@ -1,18 +1,20 @@
 ---
 - hosts: localhost
+  become: yes
   gather_facts: yes
   vars:
     myhostame: myfedora.local
   #vars_files:
   #  - /root/vars.yml
-  become: yes
   tasks:
     - name: Install RPMfusion repositories
-      shell: rpm -q rpmfusion-nonfree-release || yum -y install --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm https://download1.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-8.noarch.rpm
+      shell: dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
       args:
         creates: /etc/yum.repos.d/rpmfusion-free.repo
-        removes: /etc/centos-release
+        removes: /etc/fedora-release
 
+    - name: Install AppStream metadata
+      shell: dnf groupupdate core -y
 
     - name: Install tainted repositories
       package:
@@ -29,18 +31,19 @@
           - podman
           - cockpit
           - cockpit-composer
-          - cockpit-dashboard
           - cockpit-machines
+          - cockpit-navigator
+          - cockpit-networkmanager
           - cockpit-podman
-          - cockpit-storaged
           - cockpit-session-recording
+          - cockpit-storaged
+          - cockpit-system
           - libreoffice
           - ImageMagick
           - bash-completion
           - libdvdcss
-          - webcamoid
           - digikam
-          - qpdfview
+            #- \*-firmware
         state: present
 
     - name: Force systemd to reread config, enable and start service
