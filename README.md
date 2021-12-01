@@ -19,3 +19,8 @@ sudo dnf install -y ansible vim
 wget https://github.com/joschro/fedora-desktop-base/raw/main/fedora-desktop-base.yml
 ```
 
+Now run
+```
+ansible-playbook -K fedora-desktop-base.yml
+```
+providing your local user's password.
