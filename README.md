@@ -8,7 +8,7 @@ Step 1 - Host installation
 Fedora with KDE desktop environment serving as the system running on the hardware and providing virtual desktop system(s) for the user.
 
 Write Fedora-KDE-Live-x86_64-35-1.2.iso from https://spins.fedoraproject.org/kde/download/index.html to a USB stick and boot your system from it.
-Then click on the "Install Fedora" icon and modify the installation parameters to your needs, like:
+Then click on the "Install to Hard Drive" icon and modify the installation parameters to your needs, like:
 
 * Installation target
   * add /data, /container and /VirtualMachines
