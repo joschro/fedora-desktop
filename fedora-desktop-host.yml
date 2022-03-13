@@ -3,7 +3,7 @@
   become: yes
   gather_facts: yes
   vars:
-    myhostame: fedora.localhost
+    myhostame: fedora.local
   #vars_files:
   #  - /root/vars.yml
   tasks:
