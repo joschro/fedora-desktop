@@ -1,1 +1,7 @@
-fedora ansible_host=192.168.178.21
+t14s ansible_host=192.168.178.21 ansible_user=jos
+
+[fedora-desktop-hosts]
+t14s
+
+[fedora-desktops]
+t14s
