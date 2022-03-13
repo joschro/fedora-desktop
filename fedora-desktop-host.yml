@@ -1,9 +1,9 @@
 ---
-- hosts: localhost
+- hosts: fedora
   become: yes
   gather_facts: yes
   vars:
-    myhostame: myfedora.local
+    myhostame: fedora.localhost
   #vars_files:
   #  - /root/vars.yml
   tasks:
@@ -28,6 +28,7 @@
         name:
           - "*-firmware"
           - "@virtualization"
+          - ansible
           - cockpit
           - cockpit-composer
           - cockpit-machines
