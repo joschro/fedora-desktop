@@ -1,14 +1,12 @@
 ---
-- hosts: fedora-desktop-hosts
-  become: yes
+- name: Set up system as desktop host
+  hosts: fedora-desktop-hosts
   gather_facts: yes
   vars:
     myhostame: fedora.local
   #vars_files:
   #  - /root/vars.yml
   #
-  #  ansible-role-RPMfusion
-  #  ansible-role-RPMfusion-tainted
   #  ansible-role-libvirt
   #  ansible-role-cockpit
   #  ansible-role-ssh
@@ -16,55 +14,64 @@
   #  reboot
   #
   tasks:
-    - name: Install RPMfusion repositories
-      command: dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-      args:
-        creates: /etc/yum.repos.d/rpmfusion-free.repo
-        removes: /etc/fedora-release
+    - name: Make sure that an empty requirements.yml file exists
+      file:
+        path: requirements.yml
+        state: touch
 
-    - name: Install AppStream metadata
-      command: dnf groupupdate core -y
+    - name: Create requirements.yml
+      blockinfile:
+        path: requirements.yml
+        create: yes
+        block: |
+          # Install a role from the Ansible Galaxy
+          #- src: joschro.rpmfusion
+          #- src: joschro.rpmfusion-tainted
+          #- src: joschro.libvirtd
+          #- src: joschro.cockpit
 
-    - name: Install tainted repositories
+          # Install a role from GitHub
+          - src: https://github.com/joschro/ansible-role-rpmfusion
+            name: joschro.rpmfusion
+              #- src: https://github.com/joschro/ansible-role-rpmfusion-tainted
+              #  name: joschro.rpmfusion-tainted
+          - src: https://github.com/joschro/ansible-role-libvirtd
+            name: joschro.libvirtd
+          - src: https://github.com/joschro/ansible-role-cockpit
+            name: joschro.cockpit
+
+    - name: Install required packages
+      become: yes
       package:
-        name:
-          - rpmfusion-free-release-tainted
-          - rpmfusion-nonfree-release-tainted
+        name: git
         state: present
+
+    - name: Source required roles
+      command: ansible-galaxy install -r requirements.yml
+      # (add parameter --force to update role on succeeding runs of playbook)
+
+    - name: Execute rpmfusion role
+      include_role:
+        name: joschro.rpmfusion
+
+    - name: Execute libvirtd role
+      include_role:
+        name: joschro.libvirtd
+
+    - name: Execute cockpit role
+      include_role:
+        name: joschro.cockpit
+
 
     - name: Install packages
       package:
         name:
           - "*-firmware"
-          - "@virtualization"
           - ansible
-          - cockpit
-          - cockpit-composer
-          - cockpit-machines
-          - cockpit-navigator
-          - cockpit-networkmanager
-          - cockpit-podman
-          - cockpit-session-recording
-          - cockpit-storaged
-          - cockpit-system
           - virt-top
           - podman
         state: present
 
-    - name: Force systemd to reread config, enable and start service libvirtd
-      systemd:
-        name: libvirtd
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
-
-    - name: Force systemd to reread config, enable and start service cockpit.socket
-      systemd:
-        name: cockpit.socket
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
-    
     - name: Add current IP to motd
       lineinfile:
           path: /etc/issue
