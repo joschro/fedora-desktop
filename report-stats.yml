@@ -1,0 +1,27 @@
+---
+- name: Report stats of systems
+  hosts: fedora-desktop-hosts
+  gather_facts: yes
+  tasks:
+    - name: Execute the Uptime command over Command module
+      command: "uptime"
+      register: uptimeoutput
+
+    - name: list all VMs
+      become: yes
+      virt:
+        command: list_vms
+      register: all_vms
+
+    - name: list all VM pools
+      become: yes
+      virt_pool:
+        command: list_pools
+      register: all_pools
+
+    - name: Print results
+      debug:
+        msg: 
+        - "Uptime: {{uptimeoutput.stdout_lines }}"
+        - "VMs: {{ all_vms.stdout_lines | default('none') }}"
+        - "VM pools: {{ all_pools.stdout_lines | default('none') }}"

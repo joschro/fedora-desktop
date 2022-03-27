@@ -1,0 +1,20 @@
+# BEGIN ANSIBLE MANAGED BLOCK
+# Install a role from the Ansible Galaxy
+#- src: joschro.rpmfusion
+#- src: joschro.rpmfusion-tainted
+#- src: joschro.libvirtd
+#- src: joschro.cockpit
+- src: linux-system-roles.cockpit
+- src: linux-system-roles.firewall
+- src: linux-system-roles.certificate
+
+# Install a role from GitHub
+- src: https://github.com/joschro/ansible-role-rpmfusion
+  name: joschro.rpmfusion
+    #- src: https://github.com/joschro/ansible-role-rpmfusion-tainted
+    #  name: joschro.rpmfusion-tainted
+- src: https://github.com/joschro/ansible-role-libvirtd
+  name: joschro.libvirtd
+- src: https://github.com/joschro/ansible-role-cockpit
+  name: joschro.cockpit
+# END ANSIBLE MANAGED BLOCK

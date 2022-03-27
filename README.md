@@ -30,7 +30,7 @@ wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
 
 Now run
 ```
-ansible-playbook -K fedora-desktop-host.yml
+ansible-playbook -i hosts -K fedora-desktop-host.yml
 ```
 providing your local user's password.
 
@@ -39,7 +39,7 @@ Step 2 - Desktop installation
 In the same terminal you used previously, run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop.yml
-ansible-playbook -K fedora-desktop.yml
+ansible-playbook -i hosts -K fedora-desktop.yml
 ```
 to install desktop applications.
 
