@@ -11,8 +11,14 @@ Write Fedora-KDE-Live-x86_64-[current_version].iso from https://spins.fedoraproj
 Then click on the "Install to Hard Drive" icon and modify the installation parameters to your needs, like:
 
 * Installation target
-  * add /data, /var/lib/containers and /var/lib/libvirt
-  * encrypt data
+  * use encrypted LVM based partitioning
+  * change volume group "fedora_localhost" to unencrypted
+  * add 50 GiB / , encrypted
+  * add 30 GiB /home , encrypted
+  * add 50 GiB /data, encrypted
+  * add 100 GiB /var/lib/libvirt/images , *unencrypted*
+this way, you can decide whether you want a specific virtual machine to be encrypted or not within the VM itself.
+(some install images require encryption by default and would add a 2nd layer of encryption, generating encryption overhead and VM slowdown)
 
 * root user
   * activate root user
