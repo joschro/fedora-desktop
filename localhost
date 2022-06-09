@@ -1,0 +1,7 @@
+localhost ansible_user=jos
+
+[fedora-desktop-hosts]
+localhost
+
+[fedora-desktops]
+localhost

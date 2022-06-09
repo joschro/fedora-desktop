@@ -24,9 +24,30 @@ Start settings tool and set regional settings like language and timezone.
 
 Open a terminal ("Konsole" under Favourites in the main menu) and enter
 ```
+sudo systemctl enable --now sshd
+```
+
+### If you perform the setup from a remote machine
+Open a terminal and enter
+```
 sudo dnf install -y ansible
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
+wget https://github.com/joschro/fedora-desktop/raw/main/hosts.yml
 ```
+
+### If you perform the setup from within the newly installed machine
+Open a terminal ("Konsole" under Favourites in the main menu) and enter
+```
+sudo dnf install -y ansible
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
+wget https://github.com/joschro/fedora-desktop/raw/main/localhost.yml
+ssh-keygen
+ssh-copy-id localhost
+ansible-playbook -i localhost -K fedora-desktop-host.yml
+```
+
+
+
 
 Now run
 ```
