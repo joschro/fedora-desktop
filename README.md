@@ -17,6 +17,7 @@ Then click on the "Install to Hard Drive" icon and modify the installation param
   * add 30 GiB /home , encrypted
   * add 50 GiB /data, encrypted
   * add 100 GiB /var/lib/libvirt/images , *unencrypted*
+
 this way, you can decide whether you want a specific virtual machine to be encrypted or not within the VM itself.
 (some install images require encryption by default and would add a 2nd layer of encryption, generating encryption overhead and VM slowdown)
 
