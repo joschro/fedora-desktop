@@ -11,7 +11,7 @@ Write Fedora-KDE-Live-x86_64-[current_version].iso from https://spins.fedoraproj
 Then click on the "Install to Hard Drive" icon and modify the installation parameters to your needs, like:
 
 * Installation target
-  * add /data, /data/shared, /data/container and /data/virtualmachines
+  * add /data, /var/lib/containers and /var/lib/libvirt
   * encrypt data
 
 * root user
@@ -35,7 +35,7 @@ In the open terminal, enter
 ```
 sudo systemctl enable --now sshd
 wget https://github.com/joschro/fedora-desktop/raw/main/hosts
-ansible-playbook -i hosts -K fedora-desktop-host.yml
+ansible-playbook -i hosts -K -e "reboot=yes" fedora-desktop-host.yml
 ```
 providing your local user's password.
 
@@ -44,7 +44,7 @@ In the open terminal, enter
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/localhost
 ssh-copy-id localhost
-ansible-playbook -i localhost -K fedora-desktop-host.yml
+ansible-playbook -i localhost -K -e "reboot=yes" fedora-desktop-host.yml
 ```
 providing your local user's password.
 
