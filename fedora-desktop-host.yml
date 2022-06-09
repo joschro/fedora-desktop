@@ -8,6 +8,10 @@
   #vars_files:
   #  - /root/vars.yml
   #
+  # TODO:
+  # - add /data BTRFS mount point for sharing data with VMs
+  # - download https://download.fedoraproject.org/pub/fedora/linux/releases/35/Spins/x86_64/iso/Fedora-KDE-Live-x86_64-35-1.2.iso to boot
+  # - download CentOS 8 Stream
   tasks:
     - name: Make sure that an empty requirements.yml file exists
       delegate_to: 127.0.0.1
@@ -30,6 +34,7 @@
           - src: linux-system-roles.cockpit
           - src: linux-system-roles.firewall
           - src: linux-system-roles.certificate
+            # https://github.com/debops-contrib/ansible-btrfs/blob/master/tasks/main.yml
 
           # Install a role from GitHub
           - src: https://github.com/joschro/ansible-role-rpmfusion
@@ -51,6 +56,8 @@
           - "*-firmware"
           - ansible
           - git
+          - tuned
+          - vim-enhanced
         state: present
 
     - name: Source required roles
@@ -75,9 +82,9 @@
         apply:
           become: yes
       vars:
-        cockpit_packages: default
+        #cockpit_packages: default
         #cockpit_packages: minimal
-        #cockpit_packages: full
+        cockpit_packages: full
 
     - name: Configure Firewall for Web Console
       include_role:

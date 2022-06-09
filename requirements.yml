@@ -1,4 +1,5 @@
 # BEGIN ANSIBLE MANAGED BLOCK
+---
 # Install a role from the Ansible Galaxy
 #- src: joschro.rpmfusion
 #- src: joschro.rpmfusion-tainted
@@ -17,4 +18,7 @@
   name: joschro.libvirtd
 - src: https://github.com/joschro/ansible-role-cockpit
   name: joschro.cockpit
+# Install a collection from Ansible galaxy
+#collections:
+#  - name: community.libvirt
 # END ANSIBLE MANAGED BLOCK
