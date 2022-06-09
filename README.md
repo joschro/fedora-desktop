@@ -7,12 +7,19 @@ Step 1 - Host installation
 --------------------------
 Fedora with KDE desktop environment serving as the system running on the hardware and providing virtual desktop system(s) for the user.
 
-Write Fedora-KDE-Live-x86_64-35-1.2.iso from https://spins.fedoraproject.org/kde/download/index.html to a USB stick and boot your system from it.
+Write Fedora-KDE-Live-x86_64-[current_version].iso from https://spins.fedoraproject.org/kde/download/index.html to a USB stick and boot your system from it.
 Then click on the "Install to Hard Drive" icon and modify the installation parameters to your needs, like:
 
 * Installation target
-  * add /data, /container and /VirtualMachines
-  * encrypt data
+  * use encrypted LVM based partitioning
+  * change volume group "fedora_localhost" to unencrypted
+  * add 50 GiB / , encrypted
+  * add 30 GiB /home , encrypted
+  * add 50 GiB /data, encrypted
+  * add 100 GiB /var/lib/libvirt/images , *unencrypted*
+
+this way, you can decide whether you want a specific virtual machine to be encrypted or not within the VM itself.
+(some install images require encryption by default and would add a 2nd layer of encryption, generating encryption overhead and VM slowdown)
 
 * root user
   * activate root user
@@ -26,11 +33,25 @@ Open a terminal ("Konsole" under Favourites in the main menu) and enter
 ```
 sudo dnf install -y ansible
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
+ssh-keygen
 ```
+confirm all items with <enter>.
+ 
+### If you perform the setup from a remote machine
+In the open terminal, enter
+```
+sudo systemctl enable --now sshd
+wget https://github.com/joschro/fedora-desktop/raw/main/hosts
+ansible-playbook -i hosts -K -e "reboot=yes" fedora-desktop-host.yml
+```
+providing your local user's password.
 
-Now run
+### If you perform the setup from within the newly installed machine
+In the open terminal, enter
 ```
-ansible-playbook -i hosts -K fedora-desktop-host.yml
+wget https://github.com/joschro/fedora-desktop/raw/main/localhost
+ssh-copy-id localhost
+ansible-playbook -i localhost -K -e "reboot=yes" fedora-desktop-host.yml
 ```
 providing your local user's password.
 
@@ -40,6 +61,7 @@ In the same terminal you used previously, run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop.yml
 ansible-playbook -i hosts -K fedora-desktop.yml
+(or "ansible-playbook -i localhost -K fedora-desktop.yml" respectively)
 ```
 to install desktop applications.
 

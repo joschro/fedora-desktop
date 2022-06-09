@@ -111,6 +111,18 @@
               - 192.168.178.21
             group: cockpit-ws
 
+    - name: Create /data directories and set access rights
+      become: yes
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "a+rwXt"
+      with_list:
+        - /data
+        - /data/shared
+        - /data/software
+        - /data/software/images
+
     - name: Update packages
       become: yes
       package:
