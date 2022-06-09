@@ -31,24 +31,27 @@ Start settings tool and set regional settings like language and timezone.
 
 Open a terminal ("Konsole" under Favourites in the main menu) and enter
 ```
-sudo dnf install -y ansible
-wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
 ssh-keygen
+sudo systemctl enable --now sshd
 ```
 confirm all items with <enter>.
  
 ### If you perform the setup from a remote machine
-In the open terminal, enter
+Open a terminal and enter
 ```
-sudo systemctl enable --now sshd
+sudo dnf install -y ansible
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
 wget https://github.com/joschro/fedora-desktop/raw/main/hosts
+ssh-copy-id <user_on_new_machine>@<address_of_new_machine>
 ansible-playbook -i hosts -K -e "reboot=yes" fedora-desktop-host.yml
 ```
-providing your local user's password.
+providing your new machine's local user's password.
 
 ### If you perform the setup from within the newly installed machine
 In the open terminal, enter
 ```
+sudo dnf install -y ansible
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
 wget https://github.com/joschro/fedora-desktop/raw/main/localhost
 ssh-copy-id localhost
 ansible-playbook -i localhost -K -e "reboot=yes" fedora-desktop-host.yml
@@ -61,7 +64,7 @@ In the same terminal you used previously, run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop.yml
 ansible-playbook -i hosts -K fedora-desktop.yml
-(or "ansible-playbook -i localhost -K fedora-desktop.yml" respectively)
+(or "ansible-playbook -i localhost -K fedora-desktop.yml" if from within the new machine)
 ```
 to install desktop applications.
 
