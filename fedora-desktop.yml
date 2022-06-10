@@ -26,6 +26,7 @@
     - name: Install packages
       package:
         name:
+          - chromium
           - cockpit
           - cockpit-navigator
           - cockpit-networkmanager
@@ -36,6 +37,7 @@
           - bash-completion
           - digikam
           - firefox
+          - git
           - ImageMagick
           - kio-ftps
           - kio-gdrive
