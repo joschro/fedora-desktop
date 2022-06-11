@@ -125,7 +125,27 @@
         - /data/encrypted/software
         - /data/encrypted/software/images
         - /data/uncrypted
+        - /data/uncrypted/libvirt-system
+        - /data/uncrypted/libvirt-system/images
         - /data/uncrypted/libvirt-users
+
+    - name: Link /var/lib/libirt/images to /data/uncrypted/libvirt-system/images
+      become: yes
+      file:
+        src: /data/uncrypted/libvirt-system/images
+        dest: /var/lib/libirt/images
+        state: link
+
+    - name: Create /data/uncrypted/libvirt-users/<user>/images
+      file:
+        path: '/data/uncrypted/libvirt-users/{{ ansible_user }}/images'
+        state: directory
+
+    - name: Link user's ~/.local/share/libvirt/images to /data/uncrypted/libvirt-users/<user>/images
+      file:
+        src: '/data/uncrypted/libvirt-users/{{ ansible_user }}/images'
+        dest: ~/.local/share/libvirt/images
+        state: link
 
     - name: Update packages
       become: yes
