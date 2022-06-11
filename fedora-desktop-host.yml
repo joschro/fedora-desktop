@@ -120,10 +120,12 @@
         state: directory
         mode: "a+rwXt"
       with_list:
-        - /data
-        - /data/shared
-        - /data/software
-        - /data/software/images
+        - /data/encrypted
+        - /data/encrypted/shared
+        - /data/encrypted/software
+        - /data/encrypted/software/images
+        - /data/uncrypted
+        - /data/uncrypted/libvirt-users
 
     - name: Update packages
       become: yes
