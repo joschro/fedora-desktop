@@ -57,8 +57,10 @@
           - ansible
           - git
           - tuned
+          - vim-default-editor
           - vim-enhanced
         state: present
+        # maybe need to remove "nano-default-editor" first?
 
     - name: Source required roles
       local_action: command ansible-galaxy install -r requirements.yml
