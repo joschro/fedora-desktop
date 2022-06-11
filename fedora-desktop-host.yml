@@ -49,6 +49,13 @@
           #collections:
           #  - name: community.libvirt
 
+    - name: Remove packages
+      become: yes
+      package:
+        name:
+          - nano-default-editor
+        state: absent
+
     - name: Install required packages
       become: yes
       package:
@@ -60,7 +67,6 @@
           - vim-default-editor
           - vim-enhanced
         state: present
-        # maybe need to remove "nano-default-editor" first?
 
     - name: Source required roles
       local_action: command ansible-galaxy install -r requirements.yml
@@ -129,17 +135,31 @@
         - /data/uncrypted/libvirt-system/images
         - /data/uncrypted/libvirt-users
 
+    - name: Remove /var/lib/libirt/images
+      become: yes
+      file:
+        path: /var/lib/libvirt/images
+        state: absent
+
     - name: Link /var/lib/libirt/images to /data/uncrypted/libvirt-system/images
       become: yes
       file:
         src: /data/uncrypted/libvirt-system/images
-        dest: /var/lib/libirt/images
+        dest: /var/lib/libvirt/images
         state: link
 
     - name: Create /data/uncrypted/libvirt-users/<user>/images
       file:
-        path: '/data/uncrypted/libvirt-users/{{ ansible_user }}/images'
+        path: "{{ item }}"
         state: directory
+      with_list:
+        - '/data/uncrypted/libvirt-users/{{ ansible_user }}/images'
+        - ~/.local/share/libvirt/images
+
+    - name: Make sure ~/.local/share/libvirt/image does not exist as a directory
+      file:
+        path: ~/.local/share/libvirt/images
+        state: absent
 
     - name: Link user's ~/.local/share/libvirt/images to /data/uncrypted/libvirt-users/<user>/images
       file:
