@@ -56,9 +56,20 @@
         name:
           - "*-firmware"
           - ansible
+          - fedora-workstation-repositories
           - git
           - vim-default-editor
           - vim-enhanced
+        state: present
+
+    - name: Enable google-chrome repo
+      command: dnf config-manager --set-enabled google-chrome
+
+    - name: Install google-chrome
+      become: yes
+      package:
+        name:
+          - google-chrome-stable
         state: present
 
     - name: Source required roles
