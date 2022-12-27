@@ -1,0 +1,46 @@
+---
+- hosts: fedora-desktops
+  become: yes
+  gather_facts: yes
+  vars:
+    myhostame: fedora.vm
+  #vars_files:
+  #  - /root/vars.yml
+  tasks:
+    - name: Read user list
+      become: no
+      read_csv:
+        path: ~/users.csv
+        fieldnames: username,comment,uid,gid,password
+        delimiter: ','
+      register: users
+      delegate_to: localhost
+
+
+    - debug:
+        msg: "{{ user.username }} and uid is {{ user.uid }}"
+      loop: "{{ users.list }}"
+      loop_control:
+        loop_var: user
+
+    - name: Add group
+      group:
+        name: "{{ user.username }}"
+        state: present
+        gid: "{{ user.gid }}"
+      loop: "{{ users.list }}"
+      loop_control:
+        loop_var: user
+
+    - name: Add user
+      user:
+        name: "{{ user.username }}"
+        comment: "{{ user.comment }}"
+        uid: "{{ user.uid }}"
+        group: "{{ user.username }}"
+        password: "{{ user.password }}"
+        update_password: "on_create"
+      loop: "{{ users.list }}"
+      loop_control:
+        loop_var: user
+
