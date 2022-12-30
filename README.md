@@ -67,8 +67,12 @@ In the same terminal you used previously, run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop.yml
 ansible-playbook -i hosts -K fedora-desktop.yml
-(or "ansible-playbook -i localhost -K fedora-desktop.yml" if from within the new machine)
 ```
-to install desktop applications.
+from a remote machine or
+```
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop.yml
+ansible-playbook -i localhost -K fedora-desktop.yml
+```
+if from within the new machine to install desktop applications.
 
 Create a virtual machine using virt-manager or the Cockpit web console and run the above commands within the virtual system as well.
