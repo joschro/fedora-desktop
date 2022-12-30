@@ -54,6 +54,9 @@ sudo dnf install -y ansible
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
 wget https://github.com/joschro/fedora-desktop/raw/main/localhost
 ssh-copy-id localhost
+```
+Now replace the ansible_user in the file "localhost" with the username you created during installation.
+```
 ansible-playbook -i localhost -K -e "reboot=yes" fedora-desktop-host.yml
 ```
 providing your local user's password.
