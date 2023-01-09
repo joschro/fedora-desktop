@@ -108,6 +108,7 @@
           - digikam
           - firefox
           - git
+          - guvcview
           - hplip
           - ImageMagick
           - kio-ftps
@@ -121,7 +122,11 @@
           - rclone
           - tmux
           - usbutils
+          - v4l2loopback
+          - v4l2ucp
+          - v4l-utils
           - vim
+          - vlc
         state: present
 
     - name: Force systemd to reread config, enable and start service cockpit.socket
