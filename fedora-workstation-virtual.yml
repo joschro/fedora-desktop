@@ -42,24 +42,34 @@
           #collections:
           #  - name: community.libvirt
 
-    - name: Remove packages
-      become: yes
-      package:
-        name:
-          - nano-default-editor
-        state: absent
+    - name: Source required roles
+      local_action: command ansible-galaxy install -r requirements.yml
+      # (add parameter --force to update role on succeeding runs of playbook)
 
-    - name: Install required packages
+    - name: Execute rpmfusion role
+      include_role:
+        name: joschro.rpmfusion
+
+    - name: Remove unwanted packages
       become: yes
       package:
-        name:
-          - "*-firmware"
-          - ansible
-          - fedora-workstation-repositories
-          - git
-          - vim-default-editor
-          - vim-enhanced
+        name: "{{item}}"
+        state: absent
+      loop: "{{ lookup('file', 'fedora-absent-packages.txt').splitlines() }}"
+
+    - name: Install default packages
+      become: yes
+      package:
+        name: "{{item}}"
         state: present
+      loop: "{{ lookup('file', 'fedora-default-packages.txt').splitlines() }}"
+
+    - name: Install desktop packages
+      become: yes
+      package:
+        name: "{{item}}"
+        state: present
+      loop: "{{ lookup('file', 'fedora-desktop-packages.txt').splitlines() }}"
 
     - name: Enable google-chrome repo
       become: yes
@@ -70,63 +80,6 @@
       package:
         name:
           - google-chrome-stable
-        state: present
-
-    - name: Source required roles
-      local_action: command ansible-galaxy install -r requirements.yml
-      # (add parameter --force to update role on succeeding runs of playbook)
-
-    - name: Execute rpmfusion role
-      include_role:
-        name: joschro.rpmfusion
-
-    - name: Install AppStream metadata
-      become: yes
-      command: dnf groupupdate core -y
-
-    - name: Install tainted repositories
-      become: yes
-      package:
-        name:
-          - rpmfusion-free-release-tainted
-          - rpmfusion-nonfree-release-tainted
-        state: present
-
-    - name: Install packages
-      become: yes
-      package:
-        name:
-          - chromium
-          - cockpit
-          - cockpit-navigator
-          - cockpit-networkmanager
-          - cockpit-podman
-          - cockpit-session-recording
-          - cockpit-storaged
-          - cockpit-system
-          - bash-completion
-          - digikam
-          - firefox
-          - git
-          - guvcview
-          - hplip
-          - ImageMagick
-          - kio-ftps
-          - kio-gdrive
-          - kio-upnp-ms
-          - kio_mtp
-          - libdvdcss
-          - libreoffice
-          - podman
-          - podman-docker
-          - rclone
-          - tmux
-          - usbutils
-          - v4l2loopback
-          - v4l2ucp
-          - v4l-utils
-          - vim
-          - vlc
         state: present
 
     - name: Force systemd to reread config, enable and start service cockpit.socket

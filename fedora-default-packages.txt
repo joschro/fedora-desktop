@@ -1,0 +1,5 @@
+fedora-workstation-repositories
+ansible
+git
+vim-default-editor
+vim-enhanced

@@ -1,0 +1,124 @@
+---
+- hosts: fedora-desktops
+  gather_facts: yes
+  vars:
+    myhostame: fedora.vm
+  #vars_files:
+  #  - /root/vars.yml
+  tasks:
+    - name: Make sure that an empty requirements.yml file exists
+      delegate_to: 127.0.0.1
+      file:
+        path: requirements.yml
+        state: touch
+
+    - name: Create requirements.yml
+      delegate_to: 127.0.0.1
+      blockinfile:
+        path: requirements.yml
+        create: yes
+        block: |
+          ---
+          # Install a role from the Ansible Galaxy
+          #- src: joschro.rpmfusion
+          #- src: joschro.rpmfusion-tainted
+          #- src: joschro.libvirtd
+          #- src: joschro.cockpit
+          - src: linux-system-roles.cockpit
+          - src: linux-system-roles.firewall
+          - src: linux-system-roles.certificate
+            # https://github.com/debops-contrib/ansible-btrfs/blob/master/tasks/main.yml
+
+          # Install a role from GitHub
+          - src: https://github.com/joschro/ansible-role-rpmfusion
+            name: joschro.rpmfusion
+              #- src: https://github.com/joschro/ansible-role-rpmfusion-tainted
+              #  name: joschro.rpmfusion-tainted
+          - src: https://github.com/joschro/ansible-role-libvirtd
+            name: joschro.libvirtd
+          - src: https://github.com/joschro/ansible-role-cockpit
+            name: joschro.cockpit
+          # Install a collection from Ansible galaxy
+          #collections:
+          #  - name: community.libvirt
+
+    - name: Remove unwanted packages
+      become: yes
+      package:
+        name: "{{item}}"
+        state: absent
+      loop: "{{ lookup('file', 'fedora-absent-packages.txt').splitlines() }}"
+
+    - name: Install default packages
+      become: yes
+      package:
+        name: "{{item}}"
+        state: present
+      loop: "{{ lookup('file', 'fedora-default-packages.txt').splitlines() }}"
+
+    - name: Enable google-chrome repo
+      become: yes
+      command: dnf config-manager --set-enabled google-chrome
+
+    - name: Install google-chrome
+      become: yes
+      package:
+        name:
+          - google-chrome-stable
+        state: present
+
+    - name: Source required roles
+      local_action: command ansible-galaxy install -r requirements.yml
+      # (add parameter --force to update role on succeeding runs of playbook)
+
+    - name: Execute rpmfusion role
+      include_role:
+        name: joschro.rpmfusion
+
+    - name: Install AppStream metadata
+      become: yes
+      command: dnf groupupdate core -y
+
+    - name: Install tainted repositories
+      become: yes
+      package:
+        name:
+          - rpmfusion-free-release-tainted
+          - rpmfusion-nonfree-release-tainted
+        state: present
+
+    - name: Install desktop packages
+      become: yes
+      package:
+        name: "{{item}}"
+        state: present
+      loop: "{{ lookup('file', 'fedora-desktop-packages.txt').splitlines() }}"
+
+    - name: Force systemd to reread config, enable and start service cockpit.socket
+      become: yes
+      systemd:
+        name: cockpit.socket
+        state: restarted
+        daemon_reload: yes
+        enabled: yes
+    
+    - name: Enable and start service ssh
+      become: yes
+      systemd:
+        name: sshd
+        state: started
+        enabled: yes
+    
+    - name: Add current IP to motd
+      become: yes
+      lineinfile:
+          path: /etc/issue
+          regexp: '^IP address:  '
+          insertafter: '^ '
+          line: 'IP address: \4'
+    
+    - name: Update packages
+      become: yes
+      package:
+        name: '*'
+        state: latest

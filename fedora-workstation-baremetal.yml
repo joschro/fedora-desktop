@@ -1,5 +1,5 @@
 ---
-- name: Set up system as desktop host
+- name: Set up bare metal system as a workstation
   hosts: fedora-desktop-hosts
   gather_facts: yes
   vars:
@@ -49,24 +49,26 @@
           #collections:
           #  - name: community.libvirt
 
-    - name: Remove packages
+    - name: Remove unwanted packages
       become: yes
       package:
-        name:
-          - nano-default-editor
+        name: "{{item}}"
         state: absent
+      loop: "{{ lookup('file', 'fedora-absent-packages.txt').splitlines() }}"
 
-    - name: Install required packages
+    - name: Install bare metal packages
       become: yes
       package:
-        name:
-          - "*-firmware"
-          - ansible
-          - git
-          - tuned
-          - vim-default-editor
-          - vim-enhanced
+        name: "{{item}}"
         state: present
+      loop: "{{ lookup('file', 'fedora-baremetal-packages.txt').splitlines() }}"
+
+    - name: Install default packages
+      become: yes
+      package:
+        name: "{{item}}"
+        state: present
+      loop: "{{ lookup('file', 'fedora-default-packages.txt').splitlines() }}"
 
     - name: Source required roles
       local_action: command ansible-galaxy install -r requirements.yml
