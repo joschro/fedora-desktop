@@ -82,14 +82,6 @@
           - google-chrome-stable
         state: present
 
-    - name: Force systemd to reread config, enable and start service cockpit.socket
-      become: yes
-      systemd:
-        name: cockpit.socket
-        state: restarted
-        daemon_reload: yes
-        enabled: yes
-    
     - name: Enable and start service ssh
       become: yes
       systemd:
