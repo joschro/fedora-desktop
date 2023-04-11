@@ -1,3 +1,4 @@
+alizams
 chromium
 bash-completion
 digikam
