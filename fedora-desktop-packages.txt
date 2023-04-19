@@ -2,6 +2,7 @@ alizams
 chromium
 bash-completion
 digikam
+esptool
 firefox
 guvcview
 hplip
@@ -12,11 +13,14 @@ kio-upnp-ms
 kio_mtp
 libdvdcss
 libreoffice
+mqttcli
+nmap
 obs-studio
 python3-pip
 podman
 podman-docker
 rclone
+telnet
 tmux
 usbutils
 v4l2loopback
