@@ -1,0 +1,1 @@
+- install https://github.com/4refr0nt/ESPlorer/releases/download/v0.2.0/ESPlorer-0.2.0.zip via ansible role; java-17-openjdk.x86_64 (or latest?) required
