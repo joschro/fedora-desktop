@@ -6,6 +6,7 @@ esptool
 firefox
 guvcview
 hplip
+htop
 ImageMagick
 kio-ftps
 kio-gdrive
@@ -13,6 +14,7 @@ kio-upnp-ms
 kio_mtp
 libdvdcss
 libreoffice
+libreoffice-langpack-de
 mqttcli
 nmap
 obs-studio
