@@ -1,5 +1,6 @@
 ---
-- hosts: fedora-desktops
+- name: Set up workstation as a desktop
+  hosts: fedora-desktops
   gather_facts: yes
   vars:
     myhostame: fedora.vm
