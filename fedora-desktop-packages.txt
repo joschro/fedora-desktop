@@ -1,3 +1,4 @@
+adb
 alizams
 chromium
 bash-completion
