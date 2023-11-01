@@ -5,3 +5,5 @@ vim-default-editor
 vim-enhanced
 htop
 lm_sensors
+dmidecode
+lshw
