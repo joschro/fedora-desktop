@@ -77,6 +77,9 @@ ansible-playbook -i localhost -K fedora-workstation.yml
 ```
 if from within the new machine to install desktop applications.
 
+Step 3 - Additional customization
+---------------------------------
+
 Create a virtual machine using virt-manager or the Cockpit web console and run the above commands from "Step 2" only within the virtual system as well; also run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation-add-users.yml
