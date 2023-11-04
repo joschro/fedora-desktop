@@ -49,6 +49,21 @@
           #collections:
           #  - name: community.libvirt
 
+    - name: Download unwanted package collections
+      get_url:
+        url: https://github.com/joschro/fedora-desktop/raw/main/fedora-absent-packages.txt
+        dest: .
+
+    - name: Download bare metal package collections
+      get_url:
+        url: https://github.com/joschro/fedora-desktop/raw/main/fedora-baremetal-packages.txt
+        dest: .
+
+    - name: Download default package collections
+      get_url:
+        url: https://github.com/joschro/fedora-desktop/raw/main/fedora-default-packages.txt
+        dest: .
+
     - name: Remove unwanted packages
       become: yes
       package:
