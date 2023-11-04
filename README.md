@@ -66,13 +66,27 @@ Step 2 - Desktop installation
 In the same terminal you used previously, run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation.yml
+```
+and either
+```
 ansible-playbook -i hosts -K fedora-workstation.yml
 ```
 from a remote machine or
 ```
-wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation.yml
 ansible-playbook -i localhost -K fedora-workstation.yml
 ```
 if from within the new machine to install desktop applications.
 
-Create a virtual machine using virt-manager or the Cockpit web console and run the above commands within the virtual system as well.
+Create a virtual machine using virt-manager or the Cockpit web console and run the above commands from "Step 2" only within the virtual system as well; also run
+```
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation-add-users.yml
+```
+and either
+```
+ansible-playbook -i hosts -K fedora-workstation-add-users.yml
+```
+from a remote machine or
+```
+ansible-playbook -i localhost -K fedora-workstation-add-users.yml
+```
+if from within the new machine to install desktop applications.
