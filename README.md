@@ -40,10 +40,10 @@ confirm all items with <enter>.
 Open a terminal and enter
 ```
 sudo dnf install -y ansible
-wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation-baremetal.yml
 wget https://github.com/joschro/fedora-desktop/raw/main/hosts
 ssh-copy-id <user_on_new_machine>@<address_of_new_machine>
-ansible-playbook -i hosts -K -e "reboot=yes" fedora-desktop-host.yml
+ansible-playbook -i hosts -K -e "reboot=yes" fedora-workstation-baremetal.yml
 ```
 providing your new machine's local user's password.
 
@@ -51,13 +51,13 @@ providing your new machine's local user's password.
 In the open terminal, enter
 ```
 sudo dnf install -y ansible
-wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop-host.yml
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation-baremetal.yml
 wget https://github.com/joschro/fedora-desktop/raw/main/localhost
 ssh-copy-id localhost
 ```
 Now replace the ansible_user in the file "localhost" with the username you created during installation.
 ```
-ansible-playbook -i localhost -K -e "reboot=yes" fedora-desktop-host.yml
+ansible-playbook -i localhost -K -e "reboot=yes" fedora-workstation-baremetal.yml
 ```
 providing your local user's password.
 
@@ -65,13 +65,13 @@ Step 2 - Desktop installation
 -----------------------------
 In the same terminal you used previously, run
 ```
-wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop.yml
-ansible-playbook -i hosts -K fedora-desktop.yml
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation.yml
+ansible-playbook -i hosts -K fedora-workstation.yml
 ```
 from a remote machine or
 ```
-wget https://github.com/joschro/fedora-desktop/raw/main/fedora-desktop.yml
-ansible-playbook -i localhost -K fedora-desktop.yml
+wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation.yml
+ansible-playbook -i localhost -K fedora-workstation.yml
 ```
 if from within the new machine to install desktop applications.
 
