@@ -73,6 +73,7 @@
 
     - name: Install bare metal packages
       become: yes
+      ignore_errors: true
       package:
         name: "{{item}}"
         state: present
