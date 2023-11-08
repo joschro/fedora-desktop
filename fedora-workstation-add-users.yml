@@ -44,3 +44,11 @@
       loop_control:
         loop_var: user
 
+    - name: Extend login user icons limit to 10
+      become: yes
+      lineinfile:
+          path: /etc/sddm.conf
+          regexp: '^DisableAvatarsThreshold=7'
+          insertafter: '#DisableAvatarsThreshold=7'
+          line: 'DisableAvatarsThreshold=10'
+
