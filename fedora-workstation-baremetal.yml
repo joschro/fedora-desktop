@@ -64,6 +64,12 @@
         url: https://github.com/joschro/fedora-desktop/raw/main/fedora-default-packages.txt
         dest: .
 
+    - name: Update packages
+      become: yes
+      package:
+        name: '*'
+        state: latest
+
     - name: Remove unwanted packages
       become: yes
       package:
@@ -184,12 +190,6 @@
         src: '/data/uncrypted/libvirt-users/{{ ansible_user }}/images'
         dest: ~/.local/share/libvirt/images
         state: link
-
-    - name: Update packages
-      become: yes
-      package:
-        name: '*'
-        state: latest
 
     - name: Reboot to apply changes
       become: yes
