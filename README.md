@@ -21,11 +21,12 @@ Then click on the "Install to Hard Drive" icon and modify the installation param
 
 * Installation target
   * use encrypted LVM based partitioning
-  * change volume group "fedora_localhost" to unencrypted
+  * change volume group "fedora_localhost" to unencrypted "fedora_<name>" with max size policy
   * add  50 GiB / (encrypted)
   * add  30 GiB /home (encrypted)
   * add  50 GiB /data/encrypted (encrypted)
   * add 100 GiB /data/uncrypted (unencrypted)
+  * (optional) another 1024 MiB /boot (unencrypted)
 
 this way, you can decide whether you want a specific virtual machine to be encrypted or not within the VM itself.
 (some install images require encryption by default and would add a 2nd layer of encryption, generating encryption overhead and VM slowdown)
