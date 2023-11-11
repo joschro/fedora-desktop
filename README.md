@@ -3,11 +3,20 @@
 Q: What is this for?
 A: Basically my personal installation procedure documented somewhere so I don't have to remember it.
 
-Step 1 - Host installation
---------------------------
+## Step 1 - Host installation
 Fedora with KDE desktop environment serving as the system running on the hardware and providing virtual desktop system(s) for the user.
 
 Write Fedora-KDE-Live-x86_64-[current_version].iso from https://spins.fedoraproject.org/kde/download/index.html to a USB stick and boot your system from it.
+
+### ~~Automated installation via kickstart~~
+~~Boot from SD card / USB stick and press the <TAB> key (in case of UEFI boot: <e>) at "Install Fedora" selection; for UEFI boot enabled systems add~~
+~~```
+inst.ks=http://raw.githubusercontent.com/joschro/ovhs/master/fedora-workstation-ks.cfg
+or easier
+inst.ks=http://bit.ly/fedora-workstation
+~```~~
+
+### Manual installation
 Then click on the "Install to Hard Drive" icon and modify the installation parameters to your needs, like:
 
 * Installation target
@@ -61,8 +70,7 @@ ansible-playbook -i localhost -K -e "reboot=yes" fedora-workstation-baremetal.ym
 ```
 providing your local user's password.
 
-Step 2 - Desktop installation
------------------------------
+## Step 2 - Desktop installation
 In the same terminal you used previously, run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation.yml
@@ -77,9 +85,7 @@ ansible-playbook -i localhost -K fedora-workstation.yml
 ```
 if from within the new machine to install desktop applications.
 
-Step 3 - Additional customization
----------------------------------
-
+## Step 3 - Additional customization
 Create a virtual machine using virt-manager or the Cockpit web console and run the above commands from "Step 2" only within the virtual system as well; also run
 ```
 wget https://github.com/joschro/fedora-desktop/raw/main/fedora-workstation-add-users.yml
