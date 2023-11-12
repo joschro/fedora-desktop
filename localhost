@@ -1,4 +1,4 @@
-localhost ansible_user=joschro
+localhost ansible_user=tux
 
 [fedora-desktop-hosts]
 localhost
