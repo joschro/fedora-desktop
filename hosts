@@ -1,4 +1,4 @@
-t14s ansible_host=192.168.178.21 ansible_user=joschro
+t14s ansible_host=192.168.178.21 ansible_user=tux
 
 [fedora-desktop-hosts]
 t14s
