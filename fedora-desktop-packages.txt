@@ -1,5 +1,6 @@
 adb
 alizams
+cdrskin
 chromium
 bash-completion
 digikam
@@ -9,6 +10,7 @@ guvcview
 hplip
 htop
 ImageMagick
+k3b
 kio-ftps
 kio-gdrive
 kio-upnp-ms
