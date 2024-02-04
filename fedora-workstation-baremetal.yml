@@ -154,10 +154,10 @@
         - /data/encrypted/shared
         - /data/encrypted/software
         - /data/encrypted/software/images
-        - /data/uncrypted
-        - /data/uncrypted/libvirt-system
-        - /data/uncrypted/libvirt-system/images
-        - /data/uncrypted/libvirt-users
+        - /data/unencrypted
+        - /data/unencrypted/libvirt-system
+        - /data/unencrypted/libvirt-system/images
+        - /data/unencrypted/libvirt-users
 
     - name: Remove /var/lib/libirt/images
       become: yes
@@ -165,19 +165,19 @@
         path: /var/lib/libvirt/images
         state: absent
 
-    - name: Link /var/lib/libirt/images to /data/uncrypted/libvirt-system/images
+    - name: Link /var/lib/libirt/images to /data/unencrypted/libvirt-system/images
       become: yes
       file:
-        src: /data/uncrypted/libvirt-system/images
+        src: /data/unencrypted/libvirt-system/images
         dest: /var/lib/libvirt/images
         state: link
 
-    - name: Create /data/uncrypted/libvirt-users/<user>/images
+    - name: Create /data/unencrypted/libvirt-users/<user>/images
       file:
         path: "{{ item }}"
         state: directory
       with_list:
-        - '/data/uncrypted/libvirt-users/{{ ansible_user }}/images'
+        - '/data/unencrypted/libvirt-users/{{ ansible_user }}/images'
         - ~/.local/share/libvirt/images
 
     - name: Make sure ~/.local/share/libvirt/image does not exist as a directory
@@ -185,9 +185,9 @@
         path: ~/.local/share/libvirt/images
         state: absent
 
-    - name: Link user's ~/.local/share/libvirt/images to /data/uncrypted/libvirt-users/<user>/images
+    - name: Link user's ~/.local/share/libvirt/images to /data/unencrypted/libvirt-users/<user>/images
       file:
-        src: '/data/uncrypted/libvirt-users/{{ ansible_user }}/images'
+        src: '/data/unencrypted/libvirt-users/{{ ansible_user }}/images'
         dest: ~/.local/share/libvirt/images
         state: link
 

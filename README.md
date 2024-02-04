@@ -25,7 +25,7 @@ Then click on the "Install to Hard Drive" icon and modify the installation param
   * add  50 GiB / (encrypted)
   * add  30 GiB /home (encrypted)
   * add  50 GiB /data/encrypted (encrypted)
-  * add 100 GiB /data/uncrypted (unencrypted)
+  * add 100 GiB /data/unencrypted (unencrypted)
   * (optional) another 1024 MiB /boot (unencrypted)
 
 this way, you can decide whether you want a specific virtual machine to be encrypted or not within the VM itself.
