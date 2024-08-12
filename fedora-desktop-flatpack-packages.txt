@@ -1,0 +1,3 @@
+com.emqx.MQTTX
+flathub
+io.podman_desktop.PodmanDesktop
