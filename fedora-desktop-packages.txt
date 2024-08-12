@@ -10,6 +10,7 @@ diskinfo
 esptool
 firefox
 fritzing
+gkrellm
 glabels
 guvcview
 hplip
@@ -25,6 +26,7 @@ libdvdcss
 libreoffice
 libreoffice-langpack-de
 mqttcli
+mmv
 NetworkManager-tui
 nmap
 obs-studio
@@ -32,6 +34,7 @@ pykickstart
 python3-pip
 podman
 podman-docker
+qpdfview-qt6
 rclone
 ripgrep
 telnet
