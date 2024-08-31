@@ -141,7 +141,7 @@
             ca: self-sign
             ip:
               - 192.168.178.21
-            group: cockpit-ws
+            group: cockpit-wsinstance
 
     - name: Create /data directories and set access rights
       become: yes
