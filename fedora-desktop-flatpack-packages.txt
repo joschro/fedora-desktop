@@ -1,5 +1,6 @@
-com.emqx.MQTTX
 flathub
+com.emqx.MQTTX
+com.logseq.Logseq
 io.podman_desktop.PodmanDesktop
 org.zotero.Zotero
 org.signal.Signal
