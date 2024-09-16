@@ -8,6 +8,7 @@ ddrescue
 digikam
 diskinfo
 esptool
+festival-freebsoft-utils
 firefox
 fritzing
 gkrellm
